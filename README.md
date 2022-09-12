@@ -1,12 +1,20 @@
-# Finch Next.js Demo
+# Finch Demo Next.js
 
-Description
+> A [Next.js](https://nextjs.org/) project that shows how to programatically interact with Finch's APIs.
+
+Integrating Finch with your frontend and backend can be daunting. Managing access tokens, handling `null` data, knowing which API endpoints to call when, etc. This sample application is meant to help you get started to see how an application can properly implement Finch. Start by running the application locally on your computer and then search through the code for any pages or components that you find interesting.
+
+Since Finch requires having a frontend and a backend (for application security reasons), Next.js is perfect platform since it bundles a React client-side frontend with a server-side backend API running as serverless functions.
+
+## 🖥️ Live Demo
+
+[https://finch-demo-nextjs.vercel.app/](https://finch-demo-nextjs.vercel.app/)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-There are a few things you will need setup on your computer before getting started:
+There are a few things you will need setup before getting started:
 
 1. Create a Redis Database via Upstash
 
@@ -28,7 +36,7 @@ Always try to check for null values when displaying data (employee?.email)
 
 The benefits of using Gitpod vs running locally is that this entire workshop can be done completely in a browser - no additional software dependencies required.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#/https://github.com/Finch-API/finch-nextjs-demo)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#/https://github.com/tylernix/finch-demo-nextjs)
 
 Create a `.env.local` file (or copy our example file `cp .env.local.example .env.local`).
 
