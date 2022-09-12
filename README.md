@@ -1,6 +1,6 @@
 # Finch Demo Next.js
 
-> A [Next.js](https://nextjs.org/) project that shows how to programatically interact with Finch's APIs.
+> A project that shows how to programatically interact with [Finch's APIs](https://developer.tryfinch.com/docs/reference/0c7c919255262-api-reference).
 
 Integrating Finch with your frontend and backend can be daunting. Managing access tokens, handling `null` data, knowing which API endpoints to call when, etc. This sample application is meant to help you get started to see how an application can properly implement Finch. Start by running the application locally on your computer and then search through the code for any pages or components that you find interesting.
 

@@ -5,6 +5,10 @@ ports:
   - port: 3000
     onOpen: open-preview
 
+tasks:
+  - init: next install
+    command: yarn add next react react-dom
+
 github:
   prebuilds:
     # enable for the master/default branch (defaults to true)
