@@ -42,7 +42,10 @@ Create a `.env.local` file (or copy our example file `cp .env.local.example .env
 
 ```bash
 NEXT_PUBLIC_FINCH_CLIENT_ID=
+FINCH_CLIENT_ID=
 FINCH_CLIENT_SECRET=
+FINCH_BASE_URL=
+
 REDIS_URL=
 ```
 

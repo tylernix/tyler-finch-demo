@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 type disconnectRes = {
     status: string
@@ -24,7 +25,7 @@ export default async function Disconnect(req: NextApiRequest, res: NextApiRespon
             const resData = await Promise.all(tokens.map(async (token: string) => {
                 let data = await axios.request<disconnectRes>({
                     method: 'POST',
-                    url: 'https://api.tryfinch.com/disconnect',
+                    url: `${finchApiUrl}/disconnect`,
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Finch-API-Version': '2020-09-17'

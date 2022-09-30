@@ -12,4 +12,4 @@ github:
 
 tasks:
   - init: yarn add next react react-dom
-    command: next install
+    command: yarn dev

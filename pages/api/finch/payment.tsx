@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 type FinchPaymentRes = {
     paging: {
@@ -20,7 +21,7 @@ export default async function Payment(req: NextApiRequest, res: NextApiResponse)
 
             const paymentRes = await axios.request<FinchPaymentRes>({
                 method: 'get',
-                url: `https://api.tryfinch.com/employer/payment?start_date=${start_date}&end_date=${end_date}`,
+                url: `${finchApiUrl}/employer/payment?start_date=${start_date}&end_date=${end_date}`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Finch-API-Version': '2020-09-17'

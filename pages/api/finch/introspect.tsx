@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 export default async function Introspect(req: NextApiRequest, res: NextApiResponse) {
     console.log(req.method + " /api/finch/introspect ");
@@ -15,12 +16,13 @@ export default async function Introspect(req: NextApiRequest, res: NextApiRespon
             const tokenData = await Promise.all(connection_tokens.flat().map(async (token: string) => {
                 let data = await axios.request<FinchToken>({
                     method: 'get',
-                    url: 'https://api.tryfinch.com/introspect',
+                    url: `${finchApiUrl}/introspect`,
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Finch-API-Version': '2020-09-17'
                     },
                 }).then(async (res) => {
+                    // TODO: Mask token so it isn't exposed on the frontend client-side.
                     return { token, data: res.data }
                 }).catch(async err => {
                     // access token is already invalid (most likely because it was disconnected)                

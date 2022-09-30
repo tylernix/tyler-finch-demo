@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 type FinchIndividualRes = {
     responses: {
@@ -19,7 +20,7 @@ export default async function Individual(req: NextApiRequest, res: NextApiRespon
             const token = await redis.get('current_connection');
             const individualRes = await axios.request<FinchIndividualRes>({
                 method: 'post',
-                url: 'https://api.tryfinch.com/employer/individual',
+                url: `${finchApiUrl}/employer/individual`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Finch-API-Version': '2020-09-17'

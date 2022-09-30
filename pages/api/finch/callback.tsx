@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 type FinchTokenRes = {
     access_token: string
@@ -34,13 +35,13 @@ export default async function Callback(req: NextApiRequest, res: NextApiResponse
 
             const authRes = await axios.request<FinchTokenRes>({
                 method: 'post',
-                url: 'https://api.tryfinch.com/auth/token',
+                url: `${finchApiUrl}/auth/token`,
                 data: body
             })
 
             const tokenRes = await axios({
                 method: 'get',
-                url: 'https://api.tryfinch.com/introspect',
+                url: `${finchApiUrl}/introspect`,
                 headers: {
                     Authorization: `Bearer ${authRes.data.access_token}`,
                     'Finch-API-Version': '2020-09-17'

@@ -11,12 +11,20 @@ const navigation = [
 ]
 
 export default function NavBar() {
-
-  const finchOptions = {
+  const { openFinchConnect } = FinchConnect({
     embedded: true,
     products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
-  }
-  const { openFinchConnect } = FinchConnect(finchOptions)
+  })
+  const { openFinchConnect: openFinchConnectSandbox } = FinchConnect({
+    embedded: true,
+    products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
+    sandbox: true
+  })
+  const { openFinchConnect: openFinchConnectGusto } = FinchConnect({
+    embedded: true,
+    products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
+    payroll_provider: 'gusto'
+  })
 
   return (
     <Disclosure as="nav" className="bg-white">
@@ -129,6 +137,26 @@ export default function NavBar() {
                             className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
                           >
                             + New Connection
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => openFinchConnectSandbox()}
+                            className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
+                          >
+                            + Sandbox Connection
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => openFinchConnectGusto()}
+                            className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
+                          >
+                            + Gusto Connection
                           </a>
                         )}
                       </Menu.Item>

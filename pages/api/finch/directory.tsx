@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 type FinchDirectoryRes = {
     paging: {
@@ -19,7 +20,7 @@ export default async function Directory(req: NextApiRequest, res: NextApiRespons
 
             const directoryRes = await axios.request<FinchDirectoryRes>({
                 method: 'get',
-                url: 'https://api.tryfinch.com/employer/directory',
+                url: `${finchApiUrl}/employer/directory`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Finch-API-Version': '2020-09-17'

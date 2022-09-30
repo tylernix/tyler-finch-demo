@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../../util/redis'
+const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
 type FinchPayStatementRes = {
     responses: {
@@ -25,7 +26,7 @@ export default async function PayStatement(req: NextApiRequest, res: NextApiResp
             const token = await redis.get('current_connection');
             const payStatementRes = await axios.request<FinchPayStatementRes>({
                 method: 'post',
-                url: 'https://api.tryfinch.com/employer/pay-statement',
+                url: `${finchApiUrl}/employer/pay-statement`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Finch-API-Version': '2020-09-17'
@@ -37,7 +38,7 @@ export default async function PayStatement(req: NextApiRequest, res: NextApiResp
                 }
             });
 
-            console.log(payStatementRes.data.responses[0].body)
+            console.log(payStatementRes.data.responses[0])
 
             // get individual pay statement successful, return back to location
             return res.status(200).json({ data: payStatementRes.data.responses[0].body.pay_statements });
