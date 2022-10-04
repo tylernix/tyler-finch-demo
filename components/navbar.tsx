@@ -1,13 +1,22 @@
 import { Fragment } from 'react'
+import Image from 'next/image'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon, ArrowRightIcon } from '@heroicons/react/outline'
 import { FinchConnect } from './finch-connect'
 import { classNames } from '../util/classnames'
+import { baseUrl } from '../util/constants'
+import gustoLogo from '../public/img/providers/gusto.png'
+import bamboohrLogo from '../public/img/providers/bamboohr.png'
+import paychexLogo from '../public/img/providers/paychex.png'
+import justworksLogo from '../public/img/providers/justworks.png'
+import workdayLogo from '../public/img/providers/workday.png'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
+  { name: 'Company', href: '/company', current: false },
   { name: 'Directory', href: '/directory', current: false },
-  { name: 'Payroll', href: '/payroll', current: false }
+  { name: 'Payroll', href: '/payroll', current: false },
+
 ]
 
 export default function NavBar() {
@@ -25,6 +34,9 @@ export default function NavBar() {
     products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
     payroll_provider: 'gusto'
   })
+  const createNewSandbox = async (payroll_provider: string) => {
+    const sandbox = await fetch(baseUrl + "/api/finch/sandbox/" + payroll_provider)
+  }
 
   return (
     <Disclosure as="nav" className="bg-white">
@@ -99,7 +111,7 @@ export default function NavBar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-52 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {/* <Menu.Item>
                         {({ active }) => (
                           <a
@@ -140,23 +152,59 @@ export default function NavBar() {
                           </a>
                         )}
                       </Menu.Item>
+
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={() => openFinchConnectSandbox()}
-                            className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
+                            onClick={() => createNewSandbox("gusto")}
+                            className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t flex items-center')}
                           >
-                            + Sandbox Connection
+                            <Image src={gustoLogo} width={25} height={25} />
+                            <div className="pl-2">Gusto Sandbox</div>
                           </a>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={() => openFinchConnectGusto()}
-                            className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
+                            onClick={() => createNewSandbox("bamboohr")}
+                            className={classNames(active ? 'bg-gray-100 cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 flex items-center')}
                           >
-                            + Gusto Connection
+                            <Image src={bamboohrLogo} width={25} height={25} />
+                            <div className="pl-2">BambooHR Sandbox</div>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => createNewSandbox("paychex_flex")}
+                            className={classNames(active ? 'bg-gray-100 cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 flex items-center')}
+                          >
+                            <Image src={paychexLogo} width={25} height={25} />
+                            <div className="pl-2">Paychex Sandbox</div>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => createNewSandbox("justworks")}
+                            className={classNames(active ? 'bg-gray-100 cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 flex items-center')}
+                          >
+                            <Image src={justworksLogo} width={25} height={25} />
+                            <div className="pl-2">Justworks Sandbox</div>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => createNewSandbox("workday")}
+                            className={classNames(active ? 'bg-gray-100 cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 flex items-center')}
+                          >
+                            <Image src={workdayLogo} width={25} height={25} />
+                            <div className="pl-2">Workday Sandbox</div>
                           </a>
                         )}
                       </Menu.Item>

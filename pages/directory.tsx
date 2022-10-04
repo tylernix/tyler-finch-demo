@@ -7,12 +7,12 @@ export default function Directory() {
   const [employees, setEmployees] = useState<FinchEmployee[]>();
 
   useEffect(() => {
-    //console.log(data?.data?.individuals)
-    setEmployees(data?.data?.individuals)
+    console.log(data?.individuals)
+    setEmployees(data?.individuals)
   }, [data])
 
   if (error) return <div>{error.message}</div>
-  if (!data?.data || !employees) return ""
+  if (!data || !employees) return ""
 
   return (
     <div className="bg-white py-12">

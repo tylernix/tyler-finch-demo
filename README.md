@@ -22,7 +22,7 @@ There are a few things you will need setup before getting started:
 
 You need both `FINCH_CLIENT_ID` and `NEXT_PUBLIC_FINCH_CLIENT_ID` so that it can be used on Next.js frontend and Next.js backend.
 
-Uses SWR to fetch api requests. A global fetcher function is used which includes a progress bar when loading. Editable in components/layout.tsx.
+Uses SWR to fetch api requests. A global fetcher function is used which includes a progress bar when loading. Editable in components/layout.tsx. Error handling and throwing happens within SWR fetcher in `_app.tsx`.
 
 Finch Data Types can be found in types/finch.d.ts.
 

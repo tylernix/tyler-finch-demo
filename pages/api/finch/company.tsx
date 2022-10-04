@@ -1,16 +1,15 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { finchApiUrl } from '../../../util/constants';
 import redis from '../../../util/redis'
-const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
 
-export default async function Payment(req: NextApiRequest, res: NextApiResponse) {
-    console.log(req.method + " /api/finch/payment")
-    const { start_date, end_date } = req.query
+export default async function Company(req: NextApiRequest, res: NextApiResponse) {
+    console.log(req.method + " /api/finch/company ");
 
     if (req.method == 'GET') {
         const token = await redis.get('current_connection');
 
-        const axiosRes = await axios.get(`${finchApiUrl}/employer/payment?start_date=${start_date}&end_date=${end_date}`, {
+        const axiosRes = await axios.get(`${finchApiUrl}/employer/company`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Finch-API-Version': '2020-09-17'
@@ -32,7 +31,7 @@ export default async function Payment(req: NextApiRequest, res: NextApiResponse)
         return axiosRes
     }
 
-    return res.status(405).json({ msg: "Method not implemented." })
+    return res.status(405).json("Method not implemented.")
 
 
-}
+};

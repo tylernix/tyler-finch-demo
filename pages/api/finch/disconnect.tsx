@@ -36,9 +36,14 @@ export default async function Disconnect(req: NextApiRequest, res: NextApiRespon
                     console.log(`Disconnecting token: ${token}. Moved to invalid Redis list.`)
 
                     return { status: res.data.status };
-                }).catch(err => {
+                }).catch(async (err) => {
                     // access token is (most likely) already invalid
                     console.log(err);
+
+                    // Still blacklist token
+                    await redis.lmove(`${payroll_provider_id}:${company_id}`, `invalid:${payroll_provider_id}:${company_id}`, "RIGHT", "LEFT")
+                    console.log(`${token} was blacklisted and moved to invalid Redis list.`)
+
                     return { status: "Error disconnecting access token" }
                 });
                 return await data;

@@ -28,7 +28,8 @@ export default async function Directory(req: NextApiRequest, res: NextApiRespons
             });
 
             // Get directory successful, return back to location
-            return res.status(200).json({ data: directoryRes.data });
+            console.log(directoryRes.data)
+            return res.status(200).json(directoryRes.data);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ msg: "Error retrieving company directory" })
