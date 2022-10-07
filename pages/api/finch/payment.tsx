@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
-const finchApiUrl = process.env.FINCH_API_URL ?? 'https://api.tryfinch.com'
+import { finchApiUrl } from '../../../util/constants';
 
 export default async function Payment(req: NextApiRequest, res: NextApiResponse) {
     console.log(req.method + " /api/finch/payment")

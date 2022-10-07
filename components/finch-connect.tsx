@@ -1,4 +1,5 @@
 import { useFinchConnect, ErrorEvent, SuccessEvent, } from 'react-finch-connect';
+import { baseUrl } from '../util/constants'
 
 type FinchConnectOptions = {
     products: string[],
@@ -7,9 +8,11 @@ type FinchConnectOptions = {
     payroll_provider?: string
 }
 export function FinchConnect(options: FinchConnectOptions) {
-    const onSuccess = (e: SuccessEvent) => {
-        if (options.embedded)
-            return fetch(`/api/finch/callback?code=${e.code}&embedded=${options.embedded}`)
+    const onSuccess = async (e: SuccessEvent) => {
+        return await fetch(baseUrl + "/api/finch/sandbox/gusto")
+
+        // if (options.embedded)
+        //     return fetch(`/api/finch/callback?code=${e.code}&embedded=${options.embedded}`)
     }
     const onError = (e: ErrorEvent) => console.error(e.errorMessage);
     const onClose = () => console.log("User exited Finch Connect");

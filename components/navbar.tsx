@@ -22,7 +22,7 @@ const navigation = [
 export default function NavBar() {
   const { openFinchConnect } = FinchConnect({
     embedded: true,
-    products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
+    products: ["company", "directory", "individual", "employment", "payment", "pay_statement"],
   })
   const { openFinchConnect: openFinchConnectSandbox } = FinchConnect({
     embedded: true,
