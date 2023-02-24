@@ -36,6 +36,13 @@ export default function NavBar() {
   })
   const createNewSandbox = async (payroll_provider: string) => {
     const sandbox = await fetch(baseUrl + "/api/finch/sandbox/" + payroll_provider)
+    if (sandbox)
+      return {
+        redirect: {
+          destination: '/connections',
+          permanent: false
+        }
+      }
   }
 
   return (

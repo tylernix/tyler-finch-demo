@@ -10,7 +10,11 @@ type FinchEmploymentRes = {
         body: FinchIndividual
     }[]
 }
-
+/****************
+  NOTE: Right now, this endpoint only handles passing a single individual_id. 
+  Finch has the possibility to batch multiple pay-statements together in a single request, 
+  but this sample application does not implement this yet. 
+*****************/
 export default async function Employment(req: NextApiRequest, res: NextApiResponse) {
     const { individual_id } = req.query;
     console.log(req.method + ` /api/finch/employment/${individual_id}`);
@@ -34,10 +38,10 @@ export default async function Employment(req: NextApiRequest, res: NextApiRespon
             });
 
             // Get individual employment info successful, return back to location
-            return res.status(200).json({ data: employmentRes.data.responses[0].body });
+            return res.status(200).json(employmentRes.data.responses[0].body);
         } catch (error) {
             //console.error(error);
-            return res.status(500).json({ msg: "Error retrieving individual" })
+            return res.status(500).json("Error retrieving individual")
         }
     }
 

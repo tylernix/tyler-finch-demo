@@ -13,17 +13,17 @@ export default function Employee() {
   const [employeeEmployment, setEmployeeEmployment] = useState<FinchIndividualEmployment>();
 
   useEffect(() => {
-    console.log(individual?.data);
-    setEmployee(individual?.data);
+    console.log(individual);
+    setEmployee(individual);
   }, [individual])
 
   useEffect(() => {
-    console.log(employment?.data);
-    setEmployeeEmployment(employment?.data);
+    console.log(employment);
+    setEmployeeEmployment(employment);
   }, [employment])
 
   if (indError) return <div>{indError.message}</div>
-  if (!individual?.data || !employee) return "";
+  if (!individual || !employee) return "";
 
   return (
     <div className="bg-white py-12">
@@ -166,7 +166,7 @@ export default function Employee() {
                       </div>
                       <div className="sm:col-span-2">
                         <dt className="text-sm font-medium text-gray-500">Income history</dt>
-                        {employeeEmployment?.income_history.map((income) => (
+                        {employeeEmployment?.income_history?.map((income) => (
                           <>
                             <dd className="mt-1 text-sm text-gray-900">{formatCurrency(income?.amount) + ' ' + income?.currency.toUpperCase() + ' ' + income?.unit?.toUpperCase()}</dd>
                             <dd className="mt-1 text-sm text-gray-900">{'Effective: ' + income?.effective_date}</dd>

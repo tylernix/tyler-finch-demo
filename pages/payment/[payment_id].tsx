@@ -186,7 +186,7 @@ export default function Payment() {
                                             Employee Deductions
                                           </label>
                                           {detailsPayment?.employee_deductions.map(deduction => (
-                                            <div className="mt-1">{formatCurrency(deduction?.amount)} {deduction?.currency.toLocaleUpperCase()} <span className="mt-1 text-sm text-gray-500"> - {deduction?.name} ({deduction?.pre_tax ? JSON.stringify(deduction?.pre_tax) : ''})</span></div>
+                                            <div className="mt-1">{formatCurrency(deduction?.amount)} {deduction?.currency.toLocaleUpperCase()} <span className="mt-1 text-sm text-gray-500"> - {deduction?.name} - {deduction?.pre_tax ? 'pretax' : ''}</span></div>
                                           ))}
                                         </div>
 

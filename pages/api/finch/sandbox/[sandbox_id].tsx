@@ -17,8 +17,9 @@ export default async function Sandbox(req: NextApiRequest, res: NextApiResponse)
         try {
 
             const body = {
-                provider: sandbox_id,
-                products: ["company", "directory", "individual", "employment", "payment", "pay_statement"]
+                provider_id: sandbox_id,
+                products: ["company", "directory", "individual", "employment", "payment", "pay_statement"],
+                employee_size: Math.floor(Math.random() * 50)
             }
 
             const sandboxRes = await axios.request<SandboxRes>({
