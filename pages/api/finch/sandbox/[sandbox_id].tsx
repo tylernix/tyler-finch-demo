@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../../util/redis'
-import { finchApiUrl } from '../../../../util/constants'
+import { apiUrl } from '../../../../util/constants'
 
 type SandboxRes = {
     payroll_provider_id: string,
@@ -24,7 +24,7 @@ export default async function Sandbox(req: NextApiRequest, res: NextApiResponse)
 
             const sandboxRes = await axios.request<SandboxRes>({
                 method: 'post',
-                url: `${finchApiUrl}/sandbox/create`,
+                url: `${apiUrl}/sandbox/create`,
                 data: body
             })
 

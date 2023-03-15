@@ -41,8 +41,8 @@ The benefits of using Gitpod vs running locally is that this entire workshop can
 Create a `.env.local` file (or copy our example file `cp .env.local.example .env.local`).
 
 ```bash
-NEXT_PUBLIC_FINCH_CLIENT_ID=
-FINCH_CLIENT_ID=
+NEXT_PUBLIC_FINCH_DEMO_CLIENT_ID=
+FINCH_DEMO_CLIENT_ID=
 FINCH_CLIENT_SECRET=
 FINCH_BASE_URL=
 

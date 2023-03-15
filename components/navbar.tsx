@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon, ArrowRightIcon } from '@heroicons/react/outline'
-import { FinchConnect } from './finch-connect'
+import { FinchConnect, RedirectFlowUrl } from './finch-connect'
 import { classNames } from '../util/classnames'
 import { baseUrl } from '../util/constants'
 import gustoLogo from '../public/img/providers/gusto.png'
@@ -20,20 +20,6 @@ const navigation = [
 ]
 
 export default function NavBar() {
-  const { openFinchConnect } = FinchConnect({
-    embedded: true,
-    products: ["company", "directory", "individual", "employment", "payment", "pay_statement"],
-  })
-  const { openFinchConnect: openFinchConnectSandbox } = FinchConnect({
-    embedded: true,
-    products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
-    sandbox: true
-  })
-  const { openFinchConnect: openFinchConnectGusto } = FinchConnect({
-    embedded: true,
-    products: ["company", "directory", "individual", "employment", "payment", "pay_statement", "benefits"],
-    payroll_provider: 'gusto'
-  })
   const createNewSandbox = async (payroll_provider: string) => {
     const sandbox = await fetch(baseUrl + "/api/finch/sandbox/" + payroll_provider)
     if (sandbox)
@@ -152,10 +138,20 @@ export default function NavBar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={() => openFinchConnect()}
+                            onClick={() => FinchConnect()}
                             className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
                           >
-                            + New Connection
+                            + Embedded Flow
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href={RedirectFlowUrl}
+                            className={classNames(active ? 'bg-gray-100 cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            + Redirect Flow
                           </a>
                         )}
                       </Menu.Item>

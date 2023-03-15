@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import redis from '../../../util/redis'
-import { finchApiUrl } from '../../../util/constants';
+import { finchApiUrl, baseUrl } from '../../../util/constants';
 
 type FinchTokenRes = {
     access_token: string
@@ -16,6 +16,9 @@ export default async function Callback(req: NextApiRequest, res: NextApiResponse
             const state = req.query.state
             const embedded = req.query.embedded;
 
+            console.log("auth code: " + code)
+            console.log("auth state: " + state)
+
             let body = {};
             // NOTE: embedded Finch Connect flow will fail if redirect_uri is included in the POST body, since it is not needed because, well, it is embedded and not redirecting.
             if (embedded) {
@@ -29,7 +32,7 @@ export default async function Callback(req: NextApiRequest, res: NextApiResponse
                     client_id: process.env.FINCH_CLIENT_ID,
                     client_secret: process.env.FINCH_CLIENT_SECRET,
                     code: code,
-                    redirect_uri: process.env.BASE_URL + "/api/finch/callback"
+                    redirect_uri: baseUrl + "/api/finch/callback"
                 }
             }
 
@@ -39,14 +42,16 @@ export default async function Callback(req: NextApiRequest, res: NextApiResponse
                 data: body
             })
 
-            const tokenRes = await axios({
-                method: 'get',
-                url: `${finchApiUrl}/introspect`,
-                headers: {
-                    Authorization: `Bearer ${authRes.data.access_token}`,
-                    'Finch-API-Version': '2020-09-17'
-                },
-            });
+            console.log(authRes.data.access_token)
+
+            // const tokenRes = await axios({
+            //     method: 'get',
+            //     url: `${finchApiUrl}/introspect`,
+            //     headers: {
+            //         Authorization: `Bearer ${authRes.data.access_token}`,
+            //         'Finch-API-Version': '2020-09-17'
+            //     },
+            // });
 
             /*
                 Finch defines a connection as an association between a unique "provider_id" and a unique "company_id"
@@ -62,15 +67,15 @@ export default async function Callback(req: NextApiRequest, res: NextApiResponse
                 [insert link to docs]
             */
 
-            await redis.sadd('user_connections', `${tokenRes.data.payroll_provider_id}:${tokenRes.data.company_id}`)
-            await redis.lpush(`${tokenRes.data.payroll_provider_id}:${tokenRes.data.company_id}`, authRes.data.access_token);
-            //await redis.lpush(`${session.user.org_id}:${tokenRes.data.payroll_provider_id}:${tokenRes.data.company_id}`, authRes.data.access_token);
+            // await redis.sadd('user_connections', `${tokenRes.data.payroll_provider_id}:${tokenRes.data.company_id}`)
+            // await redis.lpush(`${tokenRes.data.payroll_provider_id}:${tokenRes.data.company_id}`, authRes.data.access_token);
+            // //await redis.lpush(`${session.user.org_id}:${tokenRes.data.payroll_provider_id}:${tokenRes.data.company_id}`, authRes.data.access_token);
 
-            // Keep the newly setup connection's access_token to use for subsequent calls to Finch's APIs.
-            await redis.set('current_connection', authRes.data.access_token)
+            // // Keep the newly setup connection's access_token to use for subsequent calls to Finch's APIs.
+            // await redis.set('current_connection', authRes.data.access_token)
 
             // token successful, return back to location
-            return res.redirect('/connections');
+            return res.redirect('/directory');
         } catch (error) {
             console.error(error);
             return res.status(500).json({ msg: "Error retrieving access token." })
