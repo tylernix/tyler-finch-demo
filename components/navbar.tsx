@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon, ArrowRightIcon } from '@heroicons/react/outline'
-import { FinchConnect, RedirectFlowUrl } from './finch-connect'
+import { FinchConnect } from './finch-connect'
 import { classNames } from '../util/classnames'
 import { baseUrl } from '../util/constants'
 import gustoLogo from '../public/img/providers/gusto.png'
@@ -20,6 +20,7 @@ const navigation = [
 ]
 
 export default function NavBar() {
+  const { embeddedFinchConnect, redirectFinchConnect } = FinchConnect()
   const createNewSandbox = async (payroll_provider: string) => {
     const sandbox = await fetch(baseUrl + "/api/finch/sandbox/" + payroll_provider)
     if (sandbox)
@@ -138,7 +139,7 @@ export default function NavBar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={() => FinchConnect()}
+                            onClick={() => embeddedFinchConnect()}
                             className={classNames(active ? 'bg-gray-100 border-t cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700 border-t')}
                           >
                             + Embedded Flow
@@ -148,7 +149,7 @@ export default function NavBar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href={RedirectFlowUrl}
+                            href={redirectFinchConnect}
                             className={classNames(active ? 'bg-gray-100 cursor-pointer' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             + Redirect Flow
